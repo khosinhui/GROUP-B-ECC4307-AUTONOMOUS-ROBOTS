@@ -1,1 +1,53 @@
+/*
+Task 2
+Attach a sound sensor to your robot and program your robot to stop/start moving based on sound.
+*/
+
+#define THRESHOLD 50 //threshold for black tape
+#define MIC SENSOR_2
+#define MIC_THRESHOLD_1 60 //the first sound threshold to start
+#define MIC_THRESHOLD_2 99 //the second sound threshold to stop
+
+task main()
+{
+  SetSensorSound(IN_2);
+  SetSensorLight(IN_3);
+
+  while (true)
+  {
+    until(MIC > MIC_THRESHOLD_1);
+    Wait(300); //small delay to avoid robot from detect a sound from the same sound
+    while(MIC <  MIC_THRESHOLD_2) //loop and break when detect second sound to stop
+    {
+      if(Sensor(IN_3)< THRESHOLD) //sense black tape to reverse and turn randomly
+      {
+        Off(OUT_AC);
+        OnRev(OUT_AC,90);
+        Wait(Random(500));
+        Off(OUT_AC);
+
+        if(Random(2) == 1)
+        {
+          OnRev(OUT_A,50);
+          Wait(Random(1500));
+          Off(OUT_AC);
+        }
+        else
+        {
+          OnRev(OUT_C,50);
+          Wait(Random(1500));
+          Off(OUT_AC);
+        }
+      } //end of if for sense black tape
+
+      else //when not sense black tape
+      {
+        OnFwd(OUT_AC,90); //moving forward
+      } //end of else color
+    }// end of while sound
+
+    Off(OUT_AC);
+    Wait(300);
+  }//while true
+}//main
 
