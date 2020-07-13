@@ -1,0 +1,14 @@
+#define THRESHOLD 38 //get from previous study task for a black line
+task main()
+{
+ SetSensorLight(IN_3);
+ while (true)
+ {
+  if (Sensor(IN_3) <= THRESHOLD)
+  {
+   Off(OUT_AC);//stop immediately both differential tire
+   break;
+  }
+  OnFwd(OUT_AC, 90); //move forward at 90% motor power
+ }
+}
