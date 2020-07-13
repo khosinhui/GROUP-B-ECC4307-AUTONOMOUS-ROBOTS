@@ -1,0 +1,8 @@
+task main()
+{
+ SetSensorLight(IN_3);
+ while (TRUE)
+ {
+ TextOut(0, 0, NumToStr(Sensor(IN_3))); //display the input value
+ }
+}
