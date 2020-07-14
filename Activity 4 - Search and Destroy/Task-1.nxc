@@ -1,1 +1,18 @@
+/*
+Task 1
+Attach an object sensor to the mobile robot platform built and programmed in Activity 3.
+Study the sensitivity of the sonar sensor to different object (i.e. material and surface)
+Identify a suitable threshold value to detect an object (i.e. water bottle)
+*/
 
+task main(){
+SetSensorLowspeed(IN_4); //set the sensor to port 4
+ while(true){
+
+ Wait(500);
+ ClearScreen();
+ NumOut(0, 0, SensorUS(IN_4)); //display the value on screen
+
+
+ }
+}
