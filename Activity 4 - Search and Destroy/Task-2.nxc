@@ -2,7 +2,7 @@
 Task 2
 Program your robot as follows:
 Robot should start or stop based on sound.
-Move inside a 60cm x 60cm play area. Note: Both differential tire should not cross the black tape border.
+Move inside a 60cm x 60cm play area. Note: Both differential tires should not cross the black tape border.
 Detect an object inside the play area and push the object outside of the play area within 30 seconds
 */
 
