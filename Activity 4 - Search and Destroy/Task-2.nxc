@@ -1,1 +1,73 @@
+/*
+Task 2
+Program your robot as follows:
+Robot should start or stop based on sound.
+Move inside a 60cm x 60cm play area. Note: Both differential tire should not cross the black tape border.
+Detect an object inside the play area and push the object outside of the play area within 30 seconds
+*/
 
+#define THRESHOLD 50 //threshold for black tape
+#define MIC SENSOR_2
+#define MIC_THRESHOLD_1 60 //the first sound threshold to start
+#define MIC_THRESHOLD_2 99 //the second sound threshold to stop
+#define NEAR 20 //20 cm threshold
+
+task main()
+{
+  SetSensorSound(IN_2);
+  SetSensorLight(IN_3);
+  SetSensorLowspeed(IN_4);
+
+  Wait(500);
+  
+    until(MIC > MIC_THRESHOLD_1);
+    Wait(500); //small delay to avoid robot from detect a sound from the same sound
+    
+    while(true){
+      OnFwd(OUT_C,50);
+      OnRev(OUT_A,50);
+      while(SensorUS(IN_4)>NEAR); //when the object is found
+      Off(OUT_AC);  //stop
+      OnFwd(OUT_AC,90);   //push
+      until(Sensor(IN_3)< THRESHOLD); //move forward till found black tape
+      Off(OUT_AC);  //stop
+      Wait(1000);
+      OnRev(OUT_AC,90); //reverse a little
+      Wait(300);
+      Float(OUT_AC); //stop
+      break;
+    }
+
+    while(MIC <  MIC_THRESHOLD_2) //loop and break when detect second sound to stop
+    {
+      if(Sensor(IN_3)< THRESHOLD) //sense black tape to reverse and turn randomly
+      {
+        Off(OUT_AC);
+        OnRev(OUT_AC,90);
+        Wait(Random(700));
+        Off(OUT_AC);
+
+        if(Random(2) == 1)
+        {
+          OnRev(OUT_A,50);
+          Wait(Random(1500));
+          Off(OUT_AC);
+        }
+        else
+        {
+          OnRev(OUT_C,50);
+          Wait(Random(1500));
+          Off(OUT_AC);
+        }
+      } //end of if for sense black tape
+
+      else //when not sense black tape
+      {
+        OnFwd(OUT_AC,90); //moving forward
+      } //end of else color
+    }// end of while sound
+
+    Off(OUT_AC);
+    Wait(300);
+
+}//main
